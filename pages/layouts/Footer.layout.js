@@ -6,8 +6,10 @@ class Footer extends Component {
     render() {
         return <Navbar expand="lg" variant="dark" bg="dark" sticky="bottom">
             <Container>
-                <div style={{ textAlign: "center" }}>
-                    <h3>Made with Love</h3>
+                <div className="footer">
+                    Made with <span class="heart">❤</span> in the Windy City
+                    <br/>
+                    Copyright 2020 © <a href="https://jackmerrill.com">Jack Merrill</a>
                 </div>
             </Container>
         </Navbar>
