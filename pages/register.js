@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function checkLogin() {
@@ -27,8 +28,9 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    axios.post("https://api.ricky.cat/api/users/login", {
+    axios.post("https://api.ricky.cat/api/users/register", {
         username: username,
+        email: email,
         password: password
     }).then(res => {
         const data = res.data
@@ -37,8 +39,8 @@ export default function Login() {
         }
         const cookies = new Cookies();
         cookies.set('key', res.data.id, { path: '/' });
-        toast.success("Successfully logged in! Redirecting...", { position: "top-right", autoClose: 2500 })
-        setTimeout(window.location.replace("/"), 2500)
+        toast.success("Successfully registered! Redirecting to login...", { position: "top-right", autoClose: 2500 })
+        setTimeout(window.location.replace("/login"), 2500)
     })
   }
 
@@ -49,7 +51,7 @@ export default function Login() {
         <div className="Login">
         <ToastContainer />
         <form onSubmit={handleSubmit}>
-            <FormGroup controlId="email">
+            <FormGroup controlId="username">
             <FormLabel>Username</FormLabel>
             <FormControl
                 autoFocus
@@ -58,6 +60,16 @@ export default function Login() {
                 onChange={e => setUsername(e.target.value)}
             />
             </FormGroup>
+            <FormGroup controlId="email">
+            <FormLabel>Email</FormLabel>
+            <FormControl
+                autoFocus
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+            />
+            </FormGroup>
+
             <FormGroup controlId="password">
             <FormLabel>Password</FormLabel>
             <FormControl
@@ -67,10 +79,9 @@ export default function Login() {
             />
             </FormGroup>
             <Button block bsSize="large" disabled={!validateForm()} type="submit" style={{ marginBottom: "25px" }}>
-            Login
+            Register
             </Button>
         </form>
-        <h6>Don't have an account? <a href="/register">Register now!</a></h6>
         </div>
       </Container>
   );

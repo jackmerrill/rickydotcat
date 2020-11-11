@@ -21,7 +21,8 @@ let User = new Schema({
         default: ""
     },
     user_webhook: {
-        type: String
+        type: String,
+        default: ""
     }
 });
 

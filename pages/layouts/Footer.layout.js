@@ -7,7 +7,7 @@ class Footer extends Component {
         return <Navbar expand="lg" variant="dark" bg="dark" sticky="bottom">
             <Container>
                 <div className="footer">
-                    Made with <span class="heart">❤</span> in the Windy City
+                    Made with <span className="heart">❤</span> in the Windy City
                     <br/>
                     Copyright 2020 © <a href="https://jackmerrill.com">Jack Merrill</a>
                 </div>

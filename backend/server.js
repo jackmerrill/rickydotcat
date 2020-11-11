@@ -9,15 +9,18 @@ import dotenv from 'dotenv';
 import UserModel from './models/User.model.js';
 import bcrypt from 'bcrypt'
 import fs from 'fs'
+import Axios from 'axios';
 
 dotenv.config({ path:"../.env" });
 
 const app = express();
-const PORT = 4000;
+const PORT = 5000;
 
 app.use(cors());
 
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+
+app.use(express.json())
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -25,7 +28,7 @@ app.use(morgan("common"))
 
 app.use(fileUpload());
 
-mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@localhost:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@158.69.193.29:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 mongoose.connection.on('open', function() {
     console.log("MongoDB database connection established successfully");
@@ -103,6 +106,28 @@ postRouter.post('/', async function(req, res) {
         post_author: req.header("Authorization"),
         post_id: id
     })
+    UserModel.find(function(err, doc) {
+        doc.forEach(user => {
+            setTimeout(function() {
+                if (user.user_webhook) {
+                    Axios.post(user.user_webhook, {
+                        "embeds": [
+                          {
+                            "title": req.body.title,
+                            "url": "https://ricky.cat/post_img/"+id,
+                            "color": 65280,
+                            "image": {
+                              "url": "https://ricky.cat/post_img"+id
+                            }
+                          }
+                        ]
+                    }).then(resp => {
+                        console.log(resp.data)
+                    })
+                }
+            }, 5000)
+        })
+    })
     res.json({
         error: false,
         message: id
@@ -124,7 +149,7 @@ postRouter.delete('/', async function(req, res) {
         await post.remove()
         return res.json({
             error: false,
-            message: "success"
+            message: "Deleted Post"
         })
     })
 })
@@ -178,6 +203,29 @@ userRouter.get('/', async function(req, res) {
     }
 })
 
+userRouter.post('/id', async function(req, res) {
+    UserModel.findById(req.body.id, function(err, doc) {
+        if (err) console.log(err)
+        return res.json({
+            user_posts: doc.user_posts,
+            user_webhook: doc.user_webhook,
+            user_name: doc.user_name
+        })
+    })
+})
+
+userRouter.patch('/id', async function(req, res) {
+    UserModel.findByIdAndUpdate(req.body.id, {
+        user_webhook: req.body.url
+    }, function(err, doc) {
+        if (err) console.log(err)
+        return res.json({
+            error: false,
+            message: "Webhook Updated!"
+        })
+    })
+})
+
 userRouter.post('/register', async function(req, res) {
     bcrypt.hash(req.body.password, 10, async function(err, hash) {
         const user = await UserModel.create({
@@ -219,6 +267,12 @@ userRouter.post('/login', async function(req, res) {
                 })
             }
         }
+    })
+})
+
+userRouter.post("/isAdmin", async function(req, res) {
+    return res.json({
+        "isAdmin": (req.body.id === process.env.ADMIN_AUTHENTICATION)
     })
 })
 

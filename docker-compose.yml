@@ -1,0 +1,15 @@
+version: '3.7'
+
+services: 
+  backend:
+    image: rickycat-backend
+    ports: 
+      - "5000:5000"
+    volumes:
+      - "/root/NewRickyCat/post_img:/usr/src/app/public/post_img"
+  frontend:
+    image: rickycat-frontend
+    ports:
+      - "4000:3000"
+    volumes:
+      - "/root/NewRickyCat/post_img:/usr/src/app/public/post_img"

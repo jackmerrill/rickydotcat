@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Flex from 'react-bootstrap'
@@ -12,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from 'react'
 import Axios from 'axios'
 
-class Post extends Component {
+class Posts extends Component {
     constructor(props) {
         super(props)
 
@@ -46,17 +47,20 @@ class Post extends Component {
     }
 
     render() {
-        return <Card>
-            <Card.Img variant="top" src={this.props.img} />
-            <Card.Body>
-                <Card.Title>{this.props.title}</Card.Title>
-                <div className="votes-container" style={{ display: "flex", alignItems: "baseline", flexDirection: "row" }}>
-                    <Button variant="success" onClick={() => this.handleClick(this.props.id)}>+1</Button>
-                    <p class="votes" id="votes">{this.votes} votes</p>
-                </div>
-            </Card.Body>
-        </Card>
+        return <Container>
+            <ToastContainer/>
+            <Card>
+                <Card.Img variant="top" src={this.props.img} />
+                <Card.Body>
+                    <Card.Title>{this.props.title}</Card.Title>
+                    <div className="votes-container" style={{ display: "flex", alignItems: "baseline", flexDirection: "row" }}>
+                        <Button variant="success" onClick={() => this.handleClick(this.props.id)}>+1</Button>
+                        <p class="votes" id="votes">{this.votes} votes</p>
+                    </div>
+                </Card.Body>
+            </Card>
+        </Container>
     }
 }
 
-export default Post
+export default Posts
