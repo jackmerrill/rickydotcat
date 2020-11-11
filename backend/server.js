@@ -29,7 +29,7 @@ app.use(morgan("common"))
 
 app.use(fileUpload());
 
-app.use(express.static(path.join(path.resolve(), "/posts"), "/api/posts/images"))
+app.use("/api/posts/images", express.static(path.join(path.resolve(), "/posts")))
 
 mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_SERVER}:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
