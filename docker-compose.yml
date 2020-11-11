@@ -6,10 +6,8 @@ services:
     ports: 
       - "5000:5000"
     volumes:
-      - "/root/NewRickyCat/post_img:/usr/src/app/public/post_img"
+      - "/root/NewRickyCat/post_img:/usr/src/app/posts"
   frontend:
     image: rickycat-frontend
     ports:
       - "4000:3000"
-    volumes:
-      - "/root/NewRickyCat/post_img:/usr/src/app/public/post_img"

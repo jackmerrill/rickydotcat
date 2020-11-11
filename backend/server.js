@@ -10,6 +10,7 @@ import UserModel from './models/User.model.js';
 import bcrypt from 'bcrypt'
 import fs from 'fs'
 import Axios from 'axios';
+import path from 'path'
 
 dotenv.config({ path:"../.env" });
 
@@ -27,6 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(morgan("common"))
 
 app.use(fileUpload());
+
+app.use(express.static(path.join(__dirname, "/posts"), "/api/posts/images"))
 
 mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_SERVER}:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
@@ -98,11 +101,11 @@ postRouter.post('/', async function(req, res) {
             message: "You are not signed in."
         })
     }
-    req.files.image.mv("./public/post_img/"+req.files.image.name)
+    req.files.image.mv("./posts/"+req.files.image.name)
     let id = makeid(8)
     PostModel.create({
         post_title: req.body.title,
-        post_img: "/post_img/"+req.files.image.name,
+        post_img: "/images/"+req.files.image.name,
         post_author: req.header("Authorization"),
         post_id: id
     })

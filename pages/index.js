@@ -26,7 +26,7 @@ class Index extends Component {
 
   postList() {
     return this.state.posts.map(function(post, i) {
-      return <Col style={{ marginBottom: "12px" }}><Post title={post.post_title} img={post.post_img} votes={post.post_votes} id={post.post_id} /></Col>
+      return <Col style={{ marginBottom: "12px" }}><Post title={post.post_title} img={"https://api.ricky.cat/api/posts"+post.post_img} votes={post.post_votes} id={post.post_id} /></Col>
     })
   }
 
