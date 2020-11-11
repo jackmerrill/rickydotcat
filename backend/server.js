@@ -29,8 +29,6 @@ app.use(morgan("common"))
 
 app.use(fileUpload());
 
-app.use("/api/posts/images", express.static(path.join(path.resolve(), "/posts")))
-
 mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_SERVER}:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 mongoose.connection.on('open', function() {
@@ -44,6 +42,8 @@ mongoose.connection.on('error', function(err) {
 
 const postRouter = express.Router()
 const userRouter = express.Router()
+
+app.use("/api/posts/images", express.static(path.join(path.resolve())))
 
 app.use('/api/posts', postRouter)
 app.use('/api/users', userRouter)
