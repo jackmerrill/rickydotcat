@@ -43,7 +43,7 @@ mongoose.connection.on('error', function(err) {
 const postRouter = express.Router()
 const userRouter = express.Router()
 
-app.use("/api/posts/images", express.static(path.join(path.resolve())))
+app.use("/api/posts/images", express.static(path.join(path.resolve(), "./posts")))
 
 app.use('/api/posts', postRouter)
 app.use('/api/users', userRouter)
