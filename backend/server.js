@@ -28,7 +28,7 @@ app.use(morgan("common"))
 
 app.use(fileUpload());
 
-mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@158.69.193.29:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_SERVER}:27017/ricky?authSource=admin`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 mongoose.connection.on('open', function() {
     console.log("MongoDB database connection established successfully");
@@ -98,7 +98,7 @@ postRouter.post('/', async function(req, res) {
             message: "You are not signed in."
         })
     }
-    req.files.image.mv("../public/post_img/"+req.files.image.name)
+    req.files.image.mv("./public/post_img/"+req.files.image.name)
     let id = makeid(8)
     PostModel.create({
         post_title: req.body.title,
