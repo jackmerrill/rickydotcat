@@ -1,24 +1,22 @@
 {
-  "name": "rickycat",
+  "name": "rickydotcat",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "axios": "^0.21.0",
-    "bootstrap": "^4.5.3",
-    "history": "^5.0.0",
-    "next": "10.0.1",
-    "react": "17.0.1",
-    "react-bootstrap": "^1.4.0",
-    "react-dom": "17.0.1",
-    "react-router-bootstrap": "^0.25.0",
-    "react-router-dom": "^5.2.0",
-    "react-toast-notifications": "^2.4.0",
-    "react-toastify": "^6.1.0",
-    "universal-cookie": "^4.0.4"
+    "next": "11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.26",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.2",
+    "typescript": "4.4.3"
   }
 }
